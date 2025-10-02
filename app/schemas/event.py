@@ -73,3 +73,7 @@ class UpdateEventDetailsRequest(BaseModel):
 
 class UpdateEventDetailsResponse(BaseModel):
     pass
+
+
+class GetAllPublicEventsResponse(BaseModel):
+    events: List[Event]

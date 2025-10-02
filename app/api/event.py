@@ -5,6 +5,7 @@ from pathlib import Path
 
 from app.db.client import get_db
 from app.schemas.event import (
+    GetAllPublicEventsResponse,
     GetEventRSVPsResponse,
     GetEventResponse,
     RSVPStatus,
@@ -14,6 +15,7 @@ from app.schemas.event import (
     UpdateEventDetailsResponse,
 )
 from app.service.event import (
+    get_all_public_events_service,
     get_event_rsvps_service,
     get_event_service,
     reply_rsvp_service,
@@ -22,6 +24,13 @@ from app.service.event import (
 )
 
 router = APIRouter()
+
+
+@router.get("/public/all")
+async def get_all_public_events(
+    db: AsyncDatabase = Depends(get_db)
+) -> GetAllPublicEventsResponse:
+    return GetAllPublicEventsResponse(events=await get_all_public_events_service(db))
 
 
 @router.get("/get-event/{event_id}")
