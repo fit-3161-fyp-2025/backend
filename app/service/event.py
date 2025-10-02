@@ -8,6 +8,7 @@ from dateutil import parser
 from app.db.event import (
     db_add_rsvp_id_to_event,
     db_create_rsvp_invite,
+    db_get_all_events,
     db_get_event_or_none,
     db_get_rsvps_by_ids,
     db_record_rsvp_response,
@@ -42,6 +43,27 @@ async def get_event_service(event_id: str, db: AsyncDatabase) -> Event:
         colour=event_in_db_dict["colour"],
         location=event_in_db_dict["location"],
     )
+
+
+async def get_all_public_events_service(db: AsyncDatabase) -> List[Event]:
+    """Get all events from all teams for public viewing."""
+    events_in_db_dict_list = await db_get_all_events(db)
+    
+    events = [
+        Event(
+            id=event_in_db_dict["_id"],
+            name=event_in_db_dict["name"],
+            description=event_in_db_dict["description"],
+            rsvp_ids=event_in_db_dict["rsvp_ids"],
+            start=event_in_db_dict["start"],
+            end=event_in_db_dict["end"],
+            colour=event_in_db_dict["colour"],
+            location=event_in_db_dict["location"],
+        )
+        for event_in_db_dict in events_in_db_dict_list
+    ]
+    
+    return events
 
 
 # This should never fail outside of infrastructure / network related errors
