@@ -26,6 +26,14 @@ class Event(BaseModel):
     rsvp_ids: List[str]
     public: bool = False
 
+class UpdateEventRequest(BaseModel):
+    name: str
+    description: str
+    start: str
+    end: str
+    colour: str
+    location: str
+    public: bool = False
 
 # Pass event_id through path
 class GetEventRequest(BaseModel):
