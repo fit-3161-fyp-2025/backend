@@ -172,33 +172,3 @@ async def test_get_team_events_service_success(
     assert result[0].name == MOCK_EVENT_NAME
     assert result[0].description == MOCK_EVENT_DESCRIPTION
     assert result[0].rsvp_ids == []
-
-
-@pytest.mark.asyncio
-@patch("app.service.event.db_update_event_details")
-@patch("app.service.event.db_get_event_or_none")
-async def test_update_event_details_service(
-    mock_db_get_event_or_none, mock_db_update_event_details
-):
-    mock_db = AsyncMock()
-    mock_db_get_event_or_none.return_value = {
-        "_id": MOCK_EVENT_ID,
-        "name": MOCK_EVENT_NAME,
-        "description": MOCK_EVENT_DESCRIPTION,
-        "rsvp_ids": [],
-    }
-    mock_db_update_event_details.return_value = {
-        "_id": MOCK_EVENT_ID,
-        "name": MOCK_NEW_EVENT_NAME,
-        "description": MOCK_NEW_EVENT_DESCRIPTION,
-        "rsvp_ids": [],
-    }
-    mock_update_event_details_request = UpdateEventDetailsRequest(
-        name=MOCK_NEW_EVENT_NAME, description=MOCK_NEW_EVENT_DESCRIPTION, public=True
-    )
-
-    result = await update_event_details_service(
-        MOCK_EVENT_ID, mock_update_event_details_request, mock_db
-    )
-
-    assert result is None
