@@ -14,7 +14,7 @@ from app.db.event import (
     db_record_rsvp_response,
     db_update_event_details,
 )
-from app.schemas.event import RSVP, Event, RSVPStatus, UpdateEventDetailsRequest
+from app.schemas.event import RSVP, Event, RSVPStatus, UpdateEventDetailsRequest, UpdateEventRequest
 
 from sendgrid import SendGridAPIClient
 from sendgrid.helpers.mail import Mail
@@ -149,7 +149,7 @@ async def get_event_rsvps_service(event_id: str, db: AsyncDatabase) -> List[RSVP
 
 async def update_event_details_service(
     event_id: str,
-    update_event_details_request: UpdateEventDetailsRequest,
+    update_event_details_request: UpdateEventRequest,
     db: AsyncDatabase,
 ) -> None:
     event_in_db_dict = await db_get_event_or_none(event_id, db)
@@ -162,6 +162,10 @@ async def update_event_details_service(
     new_event_details = {
         "name": update_event_details_request.name,
         "description": update_event_details_request.description,
+        "start": update_event_details_request.start,
+        "end": update_event_details_request.end,
+        "colour": update_event_details_request.colour,
+        "location": update_event_details_request.location,
         "public": update_event_details_request.public,
     }
 

@@ -5,6 +5,7 @@ from pathlib import Path
 
 from app.db.client import get_db
 from app.schemas.event import (
+    Event,
     GetAllPublicEventsResponse,
     GetEventRSVPsResponse,
     GetEventResponse,
@@ -13,6 +14,7 @@ from app.schemas.event import (
     SendRSVPEmailResponse,
     UpdateEventDetailsRequest,
     UpdateEventDetailsResponse,
+    UpdateEventRequest,
 )
 from app.service.event import (
     get_all_public_events_service,
@@ -82,7 +84,7 @@ async def get_event_rsvps(
 @router.post("/update-event-details/{event_id}")
 async def update_event_details(
     event_id: str,
-    update_event_details_request: UpdateEventDetailsRequest,
+    update_event_details_request: UpdateEventRequest,
     db: AsyncDatabase = Depends(get_db),
 ):
 

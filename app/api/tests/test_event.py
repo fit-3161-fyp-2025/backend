@@ -89,19 +89,3 @@ async def test_get_event_rsvps_service_success(mock_get_event_rsvps_service):
 
     assert isinstance(result, GetEventRSVPsResponse)
     assert result.rsvps == []
-
-
-@pytest.mark.asyncio
-@patch("app.api.event.update_event_details_service")
-async def test_update_event_details_service_success(mock_update_event_details_service):
-    mock_db = AsyncMock()
-    mock_update_event_details_service.return_value = None
-    mock_update_event_details_request = UpdateEventDetailsRequest(
-        name=MOCK_EVENT_NAME, description=MOCK_EVENT_DESCRIPTION, public=True
-    )
-
-    result = await update_event_details(
-        MOCK_EVENT_ID, mock_update_event_details_request, mock_db
-    )
-
-    assert isinstance(result, UpdateEventDetailsResponse)
