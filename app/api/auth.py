@@ -32,8 +32,8 @@ def set_auth_cookies(response: Response, access_token: str, refresh_token: str) 
         key="access_token",
         value=access_token,
         httponly=True,
-        samesite="lax",
-        secure=False,
+        samesite="none",
+        secure=True,
         max_age=60 * 15,  # 60 sec * 15
         path="/",
     )
@@ -41,8 +41,8 @@ def set_auth_cookies(response: Response, access_token: str, refresh_token: str) 
         key="refresh_token",
         value=refresh_token,
         httponly=True,
-        samesite="lax",
-        secure=False,
+        samesite="none",
+        secure=True,
         max_age=60 * 60 * 24 * 14,  # 14 days
         path="/",
     )
@@ -50,10 +50,10 @@ def set_auth_cookies(response: Response, access_token: str, refresh_token: str) 
 
 def clear_auth_cookies(response: Response) -> None:
     response.delete_cookie(
-        "access_token", path="/", httponly=True, samesite="lax", secure=False
+        "access_token", path="/", httponly=True, samesite="none", secure=True
     )
     response.delete_cookie(
-        "refresh_token", path="/", httponly=True, samesite="lax", secure=False
+        "refresh_token", path="/", httponly=True, samesite="none", secure=True
     )
 
 
@@ -174,7 +174,6 @@ async def refresh_token(
     refresh_token_cookie: Optional[str] = Cookie(alias="refresh_token"),
     db: AsyncDatabase = Depends(get_db),
 ) -> TokenRes:
-
     if not refresh_token_cookie:
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED, detail="No refresh token"

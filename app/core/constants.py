@@ -4,7 +4,7 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-BASE_URL = "http://localhost:8000/api"
+BASE_URL = "https://clubsync-api.onrender.com/api"
 FRONTEND_URL = "http://localhost:5137/"
 
 SECRET_KEY = os.environ["SECRET_KEY"]

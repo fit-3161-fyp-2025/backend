@@ -1,10 +1,11 @@
 import asyncio
 import logging
+import os
 from fastapi import APIRouter, FastAPI, Request, HTTPException, status
 from fastapi.concurrency import asynccontextmanager
 from fastapi.middleware.cors import CORSMiddleware
 from starlette.middleware.base import BaseHTTPMiddleware
-
+from dotenv import load_dotenv
 
 from app.api.auth import router as auth_router
 from app.api.team import router as team_router
@@ -12,6 +13,8 @@ from app.api.user import router as user_router
 from app.api.project import router as project_router
 from app.api.event import router as event_router
 from app.core.scheduler import scheduler
+
+load_dotenv()
 
 
 class TimeoutMiddleware(BaseHTTPMiddleware):
@@ -49,7 +52,7 @@ app = FastAPI(lifespan=lifespan)
 app.add_middleware(TimeoutMiddleware, timeout=10.0)
 
 # Middleware for handling CORS
-origins = ["http://localhost:5173"]
+origins = [os.getenv("FRONTEND_URL", "http://localhost:5173")]
 
 app.add_middleware(
     CORSMiddleware,
