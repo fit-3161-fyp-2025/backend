@@ -161,10 +161,8 @@ async def login_for_token_access(
     # set cookies for browser session
     set_auth_cookies(response, token_pair.access_token, token_pair.refresh_token)
 
-    # still return body (handy for non-browser clients / testing)
     return TokenRes(
         user=UserRes(email=user.email),
-        access_token=token_pair.access_token,
     )
 
 
@@ -204,7 +202,6 @@ async def refresh_token(
 
     return TokenRes(
         user=UserRes(email=user.email),
-        access_token=token_pair.access_token,
     )
 
 

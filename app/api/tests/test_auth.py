@@ -90,7 +90,7 @@ async def test_login_for_token_access(mock_create_token_pair, mock_authenticate_
     result = await login_for_token_access(mock_response, form_data, mock_db)
 
     assert result.user.email == "addi@addi.com"
-    assert result.access_token == "test-access-token"
+    assert result.access_token == ""
     # Verify that set_cookie was called on the response
     assert mock_response.set_cookie.call_count == 2
 
@@ -150,7 +150,7 @@ async def test_refresh_token_success(
     result = await refresh_token(mock_response, "old-refresh-token", mock_db)
 
     assert result.user.email == mock_email
-    assert result.access_token == "new-access-token"
+    assert result.access_token == ""
     # Verify that set_cookie was called on the response to rotate tokens
     assert mock_response.set_cookie.call_count == 2
 
