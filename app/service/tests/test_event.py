@@ -194,7 +194,13 @@ async def test_update_event_details_service(
         "rsvp_ids": [],
     }
     mock_update_event_details_request = UpdateEventDetailsRequest(
-        name=MOCK_NEW_EVENT_NAME, description=MOCK_NEW_EVENT_DESCRIPTION, public=True
+        name=MOCK_NEW_EVENT_NAME,
+        description=MOCK_NEW_EVENT_DESCRIPTION,
+        start=MOCK_EVENT_START,
+        end=MOCK_EVENT_END,
+        colour=MOCK_EVENT_COLOUR,
+        location=MOCK_EVENT_LOCATION,
+        public=True,
     )
 
     result = await update_event_details_service(
