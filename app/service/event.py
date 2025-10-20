@@ -162,6 +162,10 @@ async def update_event_details_service(
     new_event_details = {
         "name": update_event_details_request.name,
         "description": update_event_details_request.description,
+        "start": update_event_details_request.start,
+        "end": update_event_details_request.end,
+        "colour": update_event_details_request.colour,
+        "location": update_event_details_request.location,
         "public": update_event_details_request.public,
     }
 

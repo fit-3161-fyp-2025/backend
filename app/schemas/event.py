@@ -68,6 +68,10 @@ class GetEventRSVPsResponse(BaseModel):
 class UpdateEventDetailsRequest(BaseModel):
     name: str
     description: str
+    start: str
+    end: str
+    colour: str
+    location: str
     public: bool
 
 
